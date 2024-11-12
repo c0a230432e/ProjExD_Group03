@@ -686,6 +686,10 @@ def main():
             beam_span = 29
         if beam_timer % (30 - beam_span) == 0:  # 30フレームごとにビームを自動発射
             beams.add(Beam(bird, xbeam ,emys ,cemys, appearance.boss_appeared))  # emysグループを渡す
+            if appearance.boss_appeared:
+                if appearance.boss.health == 0:
+                    for beam in beams:
+                        beam.kill()
             beam_timer = 0  # タイマーをリセット
 
         screen.blit(bg_img, [0, 0])
