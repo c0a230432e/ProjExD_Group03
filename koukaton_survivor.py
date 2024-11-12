@@ -690,6 +690,17 @@ def main():
 
         screen.blit(bg_img, [0, 0])
 
+        if bird.wait_skill:
+            """
+            スキル選択画面
+            """
+            screen.fill((0, 0, 0))  # 黒画面
+            font = pg.font.Font(None, 50)  # fontの大きさ
+            text = font.render("Select Skill - 1:Durian 2:Soccerball", True, (255, 255, 255))  # 書く文字と白色
+            screen.blit(text, ((WIDTH//4) - 20, HEIGHT//2))  # 描写位置
+            pg.display.update()
+            continue  # これがないと下のアップデートが実行されてしまうため必須
+
         # 5秒ごとに敵の出現数と方向を増やす
         current_time = tmr // 50  # フレーム数を秒数に変換
         if current_time - last_enemy_increase >= 5 and not appearance.boss_appeared:
@@ -743,16 +754,7 @@ def main():
                 bird.wait_skill = True
                 level_save = int(score.value / 150)
 
-        if bird.wait_skill:
-            """
-            スキル選択画面
-            """
-            screen.fill((0, 0, 0))  # 黒画面
-            font = pg.font.Font(None, 50)  # fontの大きさ
-            text = font.render("Select Skill - 1:Durian 2:Soccerball", True, (255, 255, 255))  # 書く文字と白色
-            screen.blit(text, ((WIDTH//4) - 20, HEIGHT//2))  # 描写位置
-            pg.display.update()
-            continue  # これがないと下のアップデートが実行されてしまうため必須
+        
 
         for emy in pg.sprite.groupcollide(emys, drns, True, False).keys():
             exps.add(Explosion(emy, 100))
